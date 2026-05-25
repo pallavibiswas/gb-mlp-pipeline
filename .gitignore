@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.out
+*.err
+*.log
+
+# Large generated outputs
+lit_logs/
+mlp_outputs/
+evaluation_outputs/
+runs2/
+batch_archived_outputs/
+batch_archived_outputs_direct/
+
+# Models/checkpoints
+checkpoints/
+models/
+*.ckpt
+*.pth
+*.pt
+
+# Data
+data/raw/
+data/full/
+
+# System
+.DS_Store
+
+# Virtual envs
+venv/
+env/
+graphite-env/
+
+# LAMMPS generated
+dump.*
+pace_row_output.txt
+log.lammps
+
