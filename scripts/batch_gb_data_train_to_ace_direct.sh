@@ -1,10 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-DENOISED_ROOT="$HOME/KiteL_synthetic_0K/denoised"
+DENOISED_ROOT="$HOME/MD_GB_sims/gb_data_original_train_denoised"
 ACE_ROOT="$HOME/ACE"
 SAMPLE_DIR="$ACE_ROOT/sample_data"
-ARCHIVE_ROOT="$ACE_ROOT/runs2/batch_archived_outputs_direct"
+ARCHIVE_ROOT="$HOME/ACE/runs2/gb_data_original_train_ace"
 OVITO="/volume/NFS/qz161/ovito-pro-3.7.8-x86_64/bin/ovitos"
 
 FIXED_INPUT="$SAMPLE_DIR/T2300_fcc-vac.denoised.restored.dump"
@@ -13,7 +13,7 @@ LMP_EXEC="/volume/NFS/yf245/lammps-static/bin/lmp"
 POTENTIAL="$ACE_ROOT/output_potential.yace"
 TEMPLATE="$ACE_ROOT/in.template"
 
-mkdir -p "$ARCHIVE_ROOT/kite" "$ARCHIVE_ROOT/L"
+mkdir -p "$ARCHIVE_ROOT"
 
 process_one() {
     local subset="$1"
@@ -24,6 +24,13 @@ process_one() {
     stem="${base%.extxyz}"
     run_dir="$ACE_ROOT/runs2/run_${stem}"
     dest="$ARCHIVE_ROOT/$subset/$stem"
+    run_base="$(basename "$run_dir")"
+
+    if [[ -f "$dest/pace_row_output.txt" || -f "$dest/$run_base/pace_row_output.txt" ]]; then
+        echo "Skipping existing ACE: $dest"
+        return 0
+    fi
+
 
     echo
     echo "=================================================="
@@ -80,24 +87,37 @@ PY
     fi
 
     echo "[5/5] Archiving..."
-    cp -r "$run_dir" "$dest/"
+    mkdir -p "$dest"
+    rm -rf "$dest/$run_base"
+    mv "$run_dir" "$dest/"
     printf "%s\n" "$src" > "$dest/source_file.txt"
 
     echo "Done: $src"
 }
 
-for subset in kite L; do
-    echo
-    echo "###############"
-    echo "SUBSET: $subset"
-    echo "###############"
 
-    find "$DENOISED_ROOT/$subset" -maxdepth 1 -type f -name "*.extxyz" | sort | while read -r f; do
-        process_one "$subset" "$f"
-    done
+echo
+echo "=============================="
+echo "GBAL denoised input root:"
+echo "$DENOISED_ROOT"
+echo "=============================="
+
+mapfile -t FILES < <(find "$DENOISED_ROOT" -type f -name "*.denoised_.extxyz" | sort -V)
+
+echo "Found ${#FILES[@]} denoised EXTXYZ files"
+
+for f in "${FILES[@]}"; do
+    rel="${f#$DENOISED_ROOT/}"
+    subset="$(dirname "$rel")"
+
+    echo
+    echo "Processing GBAL folder: $subset"
+    echo "File: $f"
+
+    process_one "$subset" "$f"
 done
 
 echo
-echo "All files processed."
+echo "All GBAL sample files processed."
 echo "Archived outputs are under:"
 echo "$ARCHIVE_ROOT"
