@@ -1,9 +1,14 @@
 # GB Kite–L Transition Classification Pipeline
+
 End-to-end atomistic machine learning pipeline for detecting Kite-to-L grain-boundary transitions using denoising, ACE descriptor extraction, and supervised classification on Rutgers HPC infrastructure.
+
 ---
+
 ## Research Context
+
 Developed in the **MicroMechanics of Deformation (MoD) Research Group** at Rutgers University under the supervision of **Dr. Ryan Sills**.
 This project analyzes real grain-boundary simulation data to identify when a structure transitions from a **Kite-like** state to an **L-like** state across finite-temperature molecular dynamics trajectories.
+
 ---
 ## Pipeline Overview
 ```text
