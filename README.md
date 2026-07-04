@@ -10,6 +10,7 @@ Developed in the **MicroMechanics of Deformation (MoD) Research Group** at Rutge
 This project analyzes real grain-boundary simulation data to identify when a structure transitions from a **Kite-like** state to an **L-like** state across finite-temperature molecular dynamics trajectories.
 
 ---
+
 ## Pipeline Overview
 ```text
 Raw GB simulation files
@@ -27,7 +28,7 @@ Prediction on finite-temperature trajectories
 Transition timing and probability analysis
 ```
 
-⸻
+---
 
 ## Data
 
@@ -44,7 +45,7 @@ The testing data consists of finite-temperature trajectories at:
 
 Across all temperatures, the test set contains 375 denoised trajectory frames.
 
-⸻
+---
 
 ## Model
 
@@ -65,7 +66,7 @@ The classifier predicts:
 * probability of L,
 * confidence score.
 
-⸻
+---
 
 ## Core Scripts
 
@@ -74,7 +75,7 @@ scripts/batch_gb_data_train_to_ace_direct.sh
 scripts/batch_gb_data_test_to_ace_direct.sh
 scripts/train_predict_gb_data_classifier.py
 
-⸻
+---
 
 ## SLURM Jobs
 
@@ -84,7 +85,7 @@ slurm/run_ace_gb_data_train.slurm
 slurm/run_ace_gb_data_test.slurm
 slurm/run_gb_data_classifier.slurm
 
-⸻
+---
 
 ## Example Workflow
 
@@ -101,7 +102,7 @@ sbatch slurm/run_ace_gb_data_test.slurm
 sbatch slurm/run_gb_data_classifier.slurm
 ```
 
-⸻
+---
 
 ## Results Summary
 
@@ -117,7 +118,7 @@ Temperature Transition
 
 The transition occurs earlier at higher temperatures, supporting the interpretation of thermally accelerated Kite-to-L grain-boundary transformation.
 
-⸻
+---
 
 ## Generated Outputs
 
@@ -134,13 +135,13 @@ prob_L_vs_timestep_by_temperature.png
 
 Generated outputs, simulation files, ACE output folders, model files, plots, and .extxyz files are excluded from GitHub through .gitignore.
 
-⸻
+---
 
 ## Repository Policy
 
 This repository stores the reusable code pipeline only. Large simulation data and generated artifacts are kept outside version control.
 
-⸻
+---
 
 ## Author
 
