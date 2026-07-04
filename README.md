@@ -1,4 +1,4 @@
-# GB Kite–L Transition Classification Pipeline
+# GB Kite-L Transition Classification Pipeline
 
 End-to-end atomistic machine learning pipeline for detecting Kite-to-L grain-boundary transitions using denoising, ACE descriptor extraction, and supervised classification on Rutgers HPC infrastructure.
 
